@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estamos em obras — Portfólio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --asphalt: #2b2d30;
+    --asphalt-dark: #1d1e20;
+    --yellow: #ffc61a;
+    --orange: #f26a1b;
+    --ink: #151515;
+    --paper: #f1eee6;
+    --muted: #b9b6ac;
+    --d: clamp(170px, 54vw, 230px);   /* tamanho da placa em losango */
+    --overlap: 46px;                   /* quanto o losango entra na placa retangular */
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 0%, #3a3d41 0%, var(--asphalt) 55%, var(--asphalt-dark) 100%);
+    color: var(--paper);
+    font-family: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  .tape {
+    height: 28px;
+    background: repeating-linear-gradient(-45deg, var(--yellow) 0 22px, var(--ink) 22px 44px);
+    flex: none;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 16px 28px;
+    text-align: center;
+  }
+
+  /* ---------- Pórtico de metal ---------- */
+  .gantry {
+    position: relative;
+    width: min(780px, 100%);
+    padding: 0 30px;
+  }
+  .post {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 16px;
+    background: linear-gradient(90deg, #6a6d73, #dcdee2 45%, #666970);
+    box-shadow: 0 0 10px rgba(0,0,0,.35);
+  }
+  .post.l { left: 4px; }
+  .post.r { right: 4px; }
+  .post::after {
+    content: "";
+    position: absolute;
+    bottom: -5px; left: -9px; right: -9px;
+    height: 9px;
+    border-radius: 3px;
+    background: linear-gradient(#8d9096, #4b4d52);
+  }
+  .beam {
+    position: relative;
+    z-index: 3;
+    height: 18px;
+    margin: 0 -8px;
+    border-radius: 9px;
+    background: linear-gradient(#eceef0, #9a9da3 55%, #5d6066);
+    box-shadow: 0 5px 10px rgba(0,0,0,.45);
+  }
+
+  /* ---------- Conjunto que balança ---------- */
+  .unit {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: 50% 0;
+    animation: swing 2.6s ease-out 1 both;
+  }
+  @keyframes swing {
+    0%   { transform: rotate(-3.4deg); }
+    25%  { transform: rotate(2.4deg); }
+    50%  { transform: rotate(-1.4deg); }
+    75%  { transform: rotate(.6deg); }
+    100% { transform: rotate(0); }
+  }
+  .chain {
+    width: 7px;
+    border-radius: 3px;
+    background: repeating-linear-gradient(to bottom, #c3c6cb 0 7px, #45474c 7px 9px);
+    box-shadow: 1px 0 2px rgba(0,0,0,.55);
+  }
+  .chain.center { height: 26px; flex: none; }
+
+  .diamond {
+    position: relative;
+    z-index: 2;
+    width: var(--d);
+    height: var(--d);
+    flex: none;
+    filter: drop-shadow(0 12px 12px rgba(0,0,0,.5));
+  }
+  .diamond svg { display: block; width: 100%; height: 100%; }
+
+  /* ---------- Placa retangular ---------- */
+  .plate {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: calc(var(--overlap) * -1);
+    padding: calc(var(--overlap) + 22px) clamp(24px, 6vw, 40px) 16px;
+    background: var(--yellow);
+    border: 7px solid #e9e6dc;
+    border-radius: 18px;
+    box-shadow:
+      inset 0 0 0 4px var(--yellow),
+      inset 0 0 0 7px var(--ink),
+      0 22px 32px rgba(0,0,0,.5);
+    color: var(--ink);
+  }
+  .plate::before {            /* brilho de película refletiva */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 11px;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, transparent 36%, rgba(255,255,255,.34) 47%, transparent 58%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.03) 0 2px, transparent 2px 4px);
+  }
+  .plate .chain {
+    position: absolute;
+    bottom: 100%;
+    height: calc(26px + var(--d) - var(--overlap) + 7px);
+  }
+  .plate .chain.l { left: 7%; }
+  .plate .chain.r { right: 7%; }
+
+  .bolt {
+    position: absolute;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, #9a9da3 55%, #4a4c50);
+    box-shadow: 0 1px 1px rgba(0,0,0,.5);
+  }
+  .bolt.tl { top: 14px; left: 14px; }
+  .bolt.tr { top: 14px; right: 14px; }
+  .bolt.bl { bottom: 14px; left: 14px; }
+  .bolt.br { bottom: 14px; right: 14px; }
+
+  h1 {
+    position: relative;
+    margin: 0;
+    font-family: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.9rem, 11.5vw, 5.8rem);
+    line-height: .9;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+  .plate p {
+    position: relative;
+    margin: 16px auto 0;
+    max-width: 34ch;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .plate .sorry {
+    margin-top: 6px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: .03em;
+  }
+  .band {
+    position: relative;
+    height: 22px;
+    margin: 22px -22px 0;
+    border-top: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    background: repeating-linear-gradient(-45deg, var(--ink) 0 14px, var(--yellow) 14px 28px);
+  }
+
+  /* ---------- Base com cones ---------- */
+  .base {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 24px 14px 8px;
+  }
+  .base svg { width: 52px; height: auto; filter: drop-shadow(0 6px 4px rgba(0,0,0,.45)); }
+
+  /* ---------- Andamento ---------- */
+  .progress {
+    width: min(640px, 100%);
+    margin-top: 40px;
+    text-align: left;
+  }
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+  }
+  .bar {
+    height: 22px;
+    background: var(--asphalt-dark);
+    border: 3px solid var(--paper);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    width: 68%;
+    background: repeating-linear-gradient(-45deg, var(--orange) 0 14px, var(--yellow) 14px 28px);
+  }
+  .progress small { display: block; margin-top: 8px; color: var(--muted); font-size: .95rem; }
+
+  .contact { margin: 30px 0 0; font-size: 1.05rem; }
+  .contact a { color: var(--yellow); font-weight: 500; text-underline-offset: 4px; }
+  .contact a:focus-visible { outline: 3px solid var(--paper); outline-offset: 4px; border-radius: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .unit { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="tape" aria-hidden="true"></div>
+
+  <main>
+    <div class="gantry">
+      <div class="post l" aria-hidden="true"></div>
+      <div class="post r" aria-hidden="true"></div>
+      <div class="beam" aria-hidden="true"></div>
+
+      <div class="unit">
+        <div class="chain center" aria-hidden="true"></div>
+
+        <div class="diamond" role="img" aria-label="Placa de aviso: trabalhador cavando">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0.30" stop-color="#fff" stop-opacity="0"/>
+                <stop offset="0.48" stop-color="#fff" stop-opacity=".38"/>
+                <stop offset="0.66" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <!-- borda branca, filete preto e face amarela -->
+            <rect x="31" y="31" width="138" height="138" rx="14" transform="rotate(45 100 100)" fill="#e9e6dc"/>
+            <rect x="35" y="35" width="130" height="130" rx="12" transform="rotate(45 100 100)" fill="#151515"/>
+            <rect x="39" y="39" width="122" height="122" rx="10" transform="rotate(45 100 100)" fill="#ffc61a"/>
+            <rect x="46" y="46" width="108" height="108" rx="6" transform="rotate(45 100 100)" fill="none" stroke="#151515" stroke-width="3"/>
+            <rect x="39" y="39" width="122" height="122" rx="10" transform="rotate(45 100 100)" fill="url(#sheen)"/>
+            <!-- parafusos -->
+            <circle cx="100" cy="17" r="3.2" fill="#8d9096" stroke="#151515" stroke-width="1"/>
+            <circle cx="100" cy="183" r="3.2" fill="#8d9096" stroke="#151515" stroke-width="1"/>
+            <!-- pictograma: trabalhador com pá -->
+            <path d="M64 134 H136" stroke="#151515" stroke-width="4" stroke-linecap="round"/>
+            <path d="M64 134 Q76 108 92 134 Z" fill="#151515"/>
+            <circle cx="93" cy="106" r="2" fill="#151515"/>
+            <circle cx="99" cy="110" r="1.6" fill="#151515"/>
+            <circle cx="88" cy="101" r="1.5" fill="#151515"/>
+            <circle cx="124" cy="70" r="6.5" fill="#151515"/>
+            <path d="M116 68 Q124 58 132 68 Z" fill="#151515"/>
+            <path d="M121 80 L115 104" stroke="#151515" stroke-width="8" stroke-linecap="round"/>
+            <path d="M115 104 L124 133 M115 104 L105 133" stroke="#151515" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+            <path d="M120 84 L106 98 M118 89 L108 106" stroke="#151515" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M104 98 L88 122" stroke="#151515" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M84 118 L96 113 L99 124 L88 128 Z" fill="#151515"/>
+          </svg>
+        </div>
+
+        <section class="plate" aria-labelledby="titulo">
+          <div class="chain l" aria-hidden="true"></div>
+          <div class="chain r" aria-hidden="true"></div>
+          <i class="bolt tl" aria-hidden="true"></i><i class="bolt tr" aria-hidden="true"></i>
+          <i class="bolt bl" aria-hidden="true"></i><i class="bolt br" aria-hidden="true"></i>
+
+          <h1 id="titulo">Estamos<br>em obras</h1>
+          <p>Meu portfólio está sendo montado, tijolo por tijolo. Volte em breve para ver os projetos.</p>
+          <p class="sorry">Desculpe o transtorno.</p>
+          <div class="band" aria-hidden="true"></div>
+        </section>
+      </div>
+
+      <div class="base" aria-hidden="true">
+        <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="67" width="54" height="10" rx="2.5" fill="#151515"/>
+          <path d="M23 7 Q30 3 37 7 L50 68 H10 Z" fill="#f26a1b"/>
+          <path d="M19.6 24 H40.4 L42.6 34 H17.4 Z" fill="#f1eee6"/>
+          <path d="M16.2 42 H43.8 L46 52 H14 Z" fill="#f1eee6"/>
+          <path d="M23 7 Q30 3 37 7 L39 14 Q30 11 21 14 Z" fill="#fff" opacity=".18"/>
+        </svg>
+        <svg viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="67" width="54" height="10" rx="2.5" fill="#151515"/>
+          <path d="M23 7 Q30 3 37 7 L50 68 H10 Z" fill="#f26a1b"/>
+          <path d="M19.6 24 H40.4 L42.6 34 H17.4 Z" fill="#f1eee6"/>
+          <path d="M16.2 42 H43.8 L46 52 H14 Z" fill="#f1eee6"/>
+          <path d="M23 7 Q30 3 37 7 L39 14 Q30 11 21 14 Z" fill="#fff" opacity=".18"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-head"><span>Andamento da obra</span><span>68%</span></div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68" aria-label="Andamento da obra">
+        <div class="fill"></div>
+      </div>
+      <small>Projetos, sobre mim e contato já estão no cimento.</small>
+    </div>
+
+    <p class="contact">Precisa falar comigo agora? <a href="mailto:ola@seudominio.com">ola@seudominio.com</a></p>
+  </main>
+
+  <footer><div class="tape" aria-hidden="true"></div></footer>
+</body>
+</html>
